@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
-import connectDB from './db/index.js';
-
-
+import connectDB from './db/db.js';
+import express from 'express';
+import {app} from './app.js';
 
 
 dotenv.config({
@@ -9,6 +9,13 @@ dotenv.config({
 })
 
 connectDB()
+.then(()=>{
+    app.listen(process.env.PORT || 8000,()=>{
+        console.log(`server is runing on port ${process.env.PORT}`);
+    })
+}).catch((err)=>{
+    console.log("mongoDB connection error: ", err);
+})
 
 
 
@@ -33,3 +40,5 @@ connectDB()
         
 //     }
 // })
+
+export default connectDB;
